@@ -22,7 +22,7 @@ int main (void){
     printf("________________________________________\n");
     printf("\n");
     printf("     | 1 - Cadastrar usuásio |\n");
-    printf("     | 2 - Planejar dieta    |\n");
+    printf("     | 2 - Escolher dieta    |\n");
     printf("     | 3 - Consultar dieta   |\n");
     printf("     | 4 - Lista de usuários |\n");
     printf("     | 5 - Deletar usuário   |\n");
