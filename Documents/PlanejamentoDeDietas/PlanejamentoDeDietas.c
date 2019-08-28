@@ -9,6 +9,7 @@ int main (void){
   char nome;
   char dieta[1000];
   char verinome[200];
+  char sexo;
 
   printf("\n-----> Bem-vindo ao DIET PROGRAM <----- \n\n");
   printf("Deseja iniciar o programa? (S - Sim; N - Não): ");
@@ -33,11 +34,15 @@ int main (void){
       case 1:
         printf("!\nCADASTRANDO USUÁRIO!\n\n");
 
+        printf("Informe o seu sexo: ");
+        scanf("%s", &sexo);
+
         printf("Informe o seu nome: ");
-        scanf(" %c", &nome);
+        scanf(" %s", &nome);
 
         printf("\nInforme a sua idade: ");
         scanf("%d", &idade);
+
         break;
 
       case 2:
