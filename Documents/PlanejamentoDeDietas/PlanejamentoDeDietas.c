@@ -5,10 +5,10 @@
 int main (void){
   int opcao;
   int idade;
+  int calorias;
   char inicio[1];
   char nome;
-  char dieta[1000];
-  char verinome[200];
+  char verinome;
   char sexo;
 
   printf("\n-----> Bem-vindo ao DIET PROGRAM <----- \n\n");
@@ -32,7 +32,7 @@ int main (void){
 
     switch (opcao) {
       case 1:
-        printf("!\nCADASTRANDO USUÁRIO!\n\n");
+        printf("\n!CADASTRANDO USUÁRIO!\n\n");
 
         printf("Informe o seu sexo: ");
         scanf("%s", &sexo);
@@ -46,12 +46,20 @@ int main (void){
         break;
 
       case 2:
-        printf("!PLANEJANDO DIETA!\n\n");
-        printf("Informe o tipo de dieta que você precisa, exemplo --> dieta para emagrecer: ");
-        scanf(" %s", dieta);
+        printf("!ESCOLHENDO DIETA!\n\n");
+        printf("Informe o nome de usuário: ");
+        scanf(" %s", &verinome);
         
-        printf("\nMuito bem, agora informe o seu nome e o sobrenome para que possamos verificar se você ja está cadastrado em nosso sistema: ");
+        printf("\nInforme a quantidade de calorias a serem consumidas por dia: ");
         scanf(" %s", verinome);
+
+        printf("\nDe acordo com os seus dados, as melhores refeições para o seu dia são:");
+
+        printf("\n________");
+        printf("\n________");
+        printf("\n________");
+
+        break;
 
     }
 
