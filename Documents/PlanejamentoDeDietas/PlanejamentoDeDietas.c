@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main (void){
   int opcao;
@@ -16,7 +17,6 @@ int main (void){
   scanf(" %s", inicio);
 
   if ((strcmp(inicio, "S") == 0) || (strcmp(inicio, "s") == 0)) {
-    system("clear");
     printf("________________________________________\n");
     printf("\n|        OPÇÕES DE ATENDIMENTO         |\n");
     printf("________________________________________\n");
