@@ -72,3 +72,4 @@ int main (void){
   }
 return 0;
 }
+//scanf("%[[A-Z][a-z].* [A-Z][a-z].*]c", &nome);
