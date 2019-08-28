@@ -4,13 +4,11 @@
 
 int main (void){
   int opcao;
-  int peso;
   int idade;
   char inicio[1];
   char nome;
   char dieta[1000];
   char verinome[200];
-  float altura;
 
   printf("\n-----> Bem-vindo ao DIET PROGRAM <----- \n\n");
   printf("Deseja iniciar o programa? (S - Sim; N - Não): ");
@@ -40,12 +38,6 @@ int main (void){
 
         printf("\nInforme a sua idade: ");
         scanf("%d", &idade);
-
-        printf("\nInforme a sua altura: ");
-        scanf("%f", &altura);
-
-        printf("\nInforme o seu peso: ");
-        scanf("%d", &peso);
         break;
 
       case 2:
