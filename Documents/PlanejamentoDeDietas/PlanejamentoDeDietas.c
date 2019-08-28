@@ -63,6 +63,8 @@ int main (void){
 
       case 6:
         printf("\nFim do programa !");
+
+        break;
     }
 
   } else {
