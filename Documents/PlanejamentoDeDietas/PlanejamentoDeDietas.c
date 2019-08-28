@@ -21,12 +21,12 @@ int main (void){
     printf("\n|        OPÇÕES DE ATENDIMENTO         |\n");
     printf("________________________________________\n");
     printf("\n");
-    printf("     | 1 - Cadastrar usuásio |\n");
-    printf("     | 2 - Escolher dieta    |\n");
-    printf("     | 3 - Consultar dieta   |\n");
-    printf("     | 4 - Lista de usuários |\n");
-    printf("     | 5 - Deletar usuário   |\n");
-    printf("     | 6 - Encerrar programa |\n");
+    printf("     | 1 - Cadastrar usuásio        |\n");
+    printf("     | 2 - Escolher dieta           |\n");
+    printf("     | 3 - Consultar dieta          |\n");
+    printf("     | 4 - Lista de usuários        |\n");
+    printf("     | 5 - Deletar o seu cadastro   |\n");
+    printf("     | 6 - Encerrar programa        |\n");
     printf("\n");
     printf("ESCOLHA UMA OPÇÃO: ");
     scanf("%d", &opcao);
