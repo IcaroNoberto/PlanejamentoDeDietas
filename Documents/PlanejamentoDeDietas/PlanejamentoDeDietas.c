@@ -31,9 +31,9 @@ int main (void){
 
     switch (opcao) {
       case 1:
-        printf("!CADASTRANDO USUÁRIO!\n\n");
+        printf("!\nCADASTRANDO USUÁRIO!\n\n");
 
-        printf("Informe o seu nome e sobrenome: ");
+        printf("Informe o seu nome: ");
         scanf(" %c", &nome);
 
         printf("\nInforme a sua idade: ");
