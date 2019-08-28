@@ -51,7 +51,7 @@ int main (void){
         scanf(" %s", &verinome);
         
         printf("\nInforme a quantidade de calorias a serem consumidas por dia: ");
-        scanf(" %s", verinome);
+        scanf(" %d", &calorias);
 
         printf("\nDe acordo com os seus dados, as melhores refeições para o seu dia são:");
 
