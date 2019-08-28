@@ -37,7 +37,7 @@ int main (void){
         printf("Informe o seu sexo: ");
         scanf("%s", &sexo);
 
-        printf("Informe o seu nome: ");
+        printf("\nInforme o seu nome: ");
         scanf(" %s", &nome);
 
         printf("\nInforme a sua idade: ");
@@ -61,6 +61,8 @@ int main (void){
 
         break;
 
+      case 6:
+        printf("\nFim do programa !");
     }
 
   } else {
