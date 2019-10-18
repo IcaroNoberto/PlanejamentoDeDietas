@@ -2,47 +2,20 @@
 #include <stdlib.h>
 #include <string.h>
 
+int menuPrincipal(void);
+void cadastroUsuario(void);
+
 int main (void){
   int opcao;
-  int idade;
   int calorias;
-  char inicio[1];
-  char nome;
   char verinome;
-  char sexo;
 
   printf("\n-----> Bem-vindo ao DIET PROGRAM <----- \n\n");
-  printf("Deseja iniciar o programa? (S - Sim; N - Não): ");
-  scanf(" %s", inicio);
-
-  if ((strcmp(inicio, "S") == 0) || (strcmp(inicio, "s") == 0)) {
-    printf("________________________________________\n");
-    printf("\n|        OPÇÕES DE ATENDIMENTO         |\n");
-    printf("________________________________________\n");
-    printf("\n");
-    printf("     | 1 - Cadastrar usuásio        |\n");
-    printf("     | 2 - Escolher dieta           |\n");
-    printf("     | 3 - Consultar dieta          |\n");
-    printf("     | 4 - Lista de usuários        |\n");
-    printf("     | 5 - Deletar o seu cadastro   |\n");
-    printf("     | 6 - Encerrar programa        |\n");
-    printf("\n");
-    printf("ESCOLHA UMA OPÇÃO: ");
-    scanf("%d", &opcao);
-
+  
+  opcao = menuPrincipal();
+  while (opcao != 6) {
     switch (opcao) {
-      case 1:
-        printf("\n!CADASTRANDO USUÁRIO!\n\n");
-
-        printf("Informe o seu sexo: ");
-        scanf("%s", &sexo);
-
-        printf("\nInforme o seu nome: ");
-        scanf(" %s", &nome);
-
-        printf("\nInforme a sua idade: ");
-        scanf("%d", &idade);
-
+      case 1: cadastroUsuario();
         break;
 
       case 2:
@@ -60,35 +33,41 @@ int main (void){
         printf("\n________");
 
         break;
-
-      case 6:
-        printf("\nFim do programa !");
-
-        break;
     }
-
-  } else {
-    printf("\nFim do programa !");
   }
 return 0;
 }
 
-//int validacaoDeNumero(char c){
-//  if(c>="0"&& c<="9"){
-//    return 1;
-//  }
-//  else
-//    return 0;
-//}
+int menuPrincipal(void) {
+  int op;
+  printf("\n\n");
+  printf("________________________________________\n");
+  printf("\n|        OPÇÕES DE ATENDIMENTO         |\n");
+  printf("________________________________________\n");
+  printf("\n");
+  printf("     | 1 - Cadastrar usuásio        |\n");
+  printf("     | 2 - Escolher dieta           |\n");
+  printf("     | 3 - Consultar dieta          |\n");
+  printf("     | 4 - Lista de usuários        |\n");
+  printf("     | 5 - Deletar o seu cadastro   |\n");
+  printf("     | 6 - Encerrar programa        |\n");
+  printf("\n");
+  printf("ESCOLHA UMA OPÇÃO: ");
+  scanf("%d", &op);
+  return op;
+}
 
-//int validacaoDeNome(char c) {
-//  if (c>="A" && c<="Z"){
-//    return 1;
-//  }
-//  else if (c>="a" && c<="z"){
-//    return 1;
-//  }
-//  else{
-//    return 0;
-//  }
-//}
+void cadastroUsuario(void) {
+  char sexo;
+  char nome;
+  int idade;
+
+  printf("\n\n");
+  printf("!CADASTRANDO USUÁRIO!\n\n");
+  printf("Informe o seu sexo - M/F : ");
+  scanf("%s", &sexo);
+  printf("\nInforme o seu nome: ");
+  scanf("%s", &nome);
+  printf("\nInforme a sua idade: ");
+  scanf("%d", &idade);
+}
