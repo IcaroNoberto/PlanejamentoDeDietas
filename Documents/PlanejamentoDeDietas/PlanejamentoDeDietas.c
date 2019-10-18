@@ -4,37 +4,21 @@
 
 int menuPrincipal(void);
 void cadastroUsuario(void);
+void escolhaDeDieta(void);
 
 int main (void){
   int opcao;
-  int calorias;
-  char verinome;
-
   printf("\n-----> Bem-vindo ao DIET PROGRAM <----- \n\n");
-  
   opcao = menuPrincipal();
   while (opcao != 6) {
     switch (opcao) {
       case 1: cadastroUsuario();
         break;
-
-      case 2:
-        printf("!ESCOLHENDO DIETA!\n\n");
-        printf("Informe o nome de usuário: ");
-        scanf(" %s", &verinome);
-        
-        printf("\nInforme a quantidade de calorias a serem consumidas por dia: ");
-        scanf(" %d", &calorias);
-
-        printf("\nDe acordo com os seus dados, as melhores refeições para o seu dia são:");
-
-        printf("\n________");
-        printf("\n________");
-        printf("\n________");
-
+      case 2: escolhaDeDieta();
         break;
     }
   }
+printf("\nFim do Programa!\n\n");
 return 0;
 }
 
@@ -70,4 +54,18 @@ void cadastroUsuario(void) {
   scanf("%s", &nome);
   printf("\nInforme a sua idade: ");
   scanf("%d", &idade);
+}
+
+void escolhaDeDieta(void){
+  int calorias;
+  char verinome;
+  printf("!ESCOLHENDO DIETA!\n\n");
+  printf("Informe o nome de usuário: ");
+  scanf(" %s", &verinome); 
+  printf("\nInforme a quantidade de calorias a serem consumidas por dia: ");
+  scanf(" %d", &calorias);
+  printf("\nDe acordo com os seus dados, as melhores refeições para o seu dia são:");
+  printf("\n________");
+  printf("\n________");
+  printf("\n________");
 }
