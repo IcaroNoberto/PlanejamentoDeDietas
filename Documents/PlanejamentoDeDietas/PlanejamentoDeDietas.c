@@ -5,9 +5,8 @@
 typedef struct usuario Usuario;
 
 struct usuario {
-	float altura;
-	int idade;
-	int peso;
+  int idade;
+  int cpf;
 	char sexo;
 	char nome[80];
 	char status;
@@ -131,16 +130,14 @@ void cadastroUsuario(void) {
 	system("clear");
 	printf("\n\n");
 	printf("\n-----CADASTRANDO USUÁRIO-----\n");
-	printf("\nInforme o seu sexo (M/F): ");
-	scanf(" %c", &cadastro->sexo);
-	printf("Informe o seu nome: ");
+  printf("\nInforme o seu CPF: ");
+  scanf(" %d", &cadastro->cpf);
+  printf("Informe o seu nome: ");
 	scanf(" %79[^\n]", cadastro->nome);
+	printf("Informe o seu sexo (M/F): ");
+	scanf(" %c", &cadastro->sexo);
 	printf("Informe sua idade: ");
 	scanf(" %d", &cadastro->idade);
-	printf("Informe o seu peso: ");
-	scanf(" %d", &cadastro->peso);
-	printf("Informe a sua altura: ");
-	scanf(" %f", &cadastro->altura);
 	printf("\n==== USUÁRIO CADASTRADO ====");
   cadastro->status = '1';
 	gravarUsuario(cadastro);
@@ -221,16 +218,14 @@ void editarUsuario(void){
     printf("\nDeseja realmente editar esse cadastro? (S/N): ");
     scanf("%c", &resp);
     if (resp == 's' || resp == 'S') {
-      printf("\nInforme o seu sexo (M/F): ");
-      scanf(" %c", &cadastro->sexo);
+      printf("\nInforme o seu CPF: ");
+      scanf(" %d", &cadastro->cpf);
       printf("Informe o seu nome: ");
       scanf(" %79[^\n]", cadastro->nome);
+      printf("Informe o seu sexo (M/F): ");
+      scanf(" %c", &cadastro->sexo);
       printf("Informe a sua idade: ");
       scanf(" %d", &cadastro->idade);
-      printf("Informe o seu peso: ");
-      scanf(" %d", &cadastro->peso);
-      printf("Informe a sua altura: ");
-      scanf(" %f", &cadastro->altura);
       cadastro->status = '1';
       fseek(cad, (-1)*sizeof(Usuario), SEEK_CUR);
       fwrite(cadastro, sizeof(Usuario), 1, cad);
@@ -438,9 +433,8 @@ void gravarUsuario(Usuario* cadastro){
 }
 
 void exibirUsuario(Usuario* cadastro){
+  printf("CPF: %d\n", cadastro->cpf);
+  printf("Nome: %s\n", cadastro->nome);
 	printf("Sexo: %c\n", cadastro->sexo);
-	printf("Nome: %s\n", cadastro->nome);
 	printf("Idade: %d\n", cadastro->idade);
-	printf("Peso: %d\n", cadastro->peso);
-	printf("Altura: %f\n", cadastro->altura);
 }
