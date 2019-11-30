@@ -154,7 +154,7 @@ void pesquisarUsuario(void){
 	cadastro = (Usuario*) malloc(sizeof(Usuario));
 	
 	int achou;
-	char procurado[80];
+	int procurado;
 	cad = fopen("cadastro.dat", "rb");
 	if (cad == NULL) {
 		printf("Ops! Ocorreu um erro na abertura do arquivo!\n");
@@ -163,11 +163,11 @@ void pesquisarUsuario(void){
 	}
 	printf("\n\n");
 	printf("\n-----BUSCANDO USUÁRIO-----\n");
-	printf("\nInforme o nome do usuário a ser buscado: ");
-	scanf(" %79[^\n]", procurado);
+	printf("\nInforme o CPF do usuário a ser buscado: ");
+	scanf(" %d", &procurado);
 	achou = 0;
 	while ((!achou) && (fread(cadastro, sizeof(Usuario), 1, cad))) {
-		if ((strcmp(cadastro->nome, procurado) == 0) && (cadastro->status == '1')){
+		if ((cadastro->cpf == procurado) && (cadastro->status == '1')){
 			achou = 1;
 		}
 	}
@@ -176,7 +176,7 @@ void pesquisarUsuario(void){
     printf("\n");
 		exibirUsuario(cadastro);
 	} else {
-		printf("Infelizmente não encontramos niguém com o nome: %s\n", procurado);
+		printf("Infelizmente não encontramos niguém com o CPF: %d\n", procurado);
 	}
 	free(cadastro);
 }
@@ -193,7 +193,7 @@ void editarUsuario(void){
 
   int achou;
   char resp;
-  char procurado[80];
+  int procurado;
   cad = fopen("cadastro.dat", "r+b");
   if (cad == NULL) {
     printf("Ops! Ocorreu um erro na abertura do arquivo!\n");
@@ -202,11 +202,11 @@ void editarUsuario(void){
   }
   printf("\n\n");
 	printf("\n-----EDITANDO USUÁRIO-----\n");
-  printf("\nInforme o nome de usuário a ser alterado: ");
-  scanf(" %79[^\n]", procurado);
+  printf("\nInforme o CPF de usuário a ser alterado: ");
+  scanf(" %d", &procurado);
   achou = 0;
   while ((!achou) && (fread(cadastro, sizeof(Usuario), 1, cad))) {
-   if ((strcmp(cadastro->nome, procurado) == 0) && (cadastro->status == '1')) {
+   if ((cadastro->cpf == procurado) && (cadastro->status == '1')) {
      achou = 1;
    }
   }
@@ -234,7 +234,7 @@ void editarUsuario(void){
       printf("\nInfelizmente os dados não foram alterados !\n");
     }
   } else {
-    printf("Infelizmente não encontramos ninguém com o nome: %s\n", procurado);
+    printf("Infelizmente não encontramos ninguém com o CPF: %d\n", procurado);
   }
   free(cadastro);
   fclose(cad);
@@ -248,7 +248,7 @@ void deletarUsuario(void) {
   Usuario* cadastro;
   int achou;
   char resp;
-  char procurado[80];
+  int procurado;
   fp = fopen("cadastro.dat", "r+b");
   if (fp == NULL) {
     printf("Ops! Ocorreu um erro na abertura do arquivo!\n");
@@ -257,16 +257,15 @@ void deletarUsuario(void) {
   }
   printf("\n\n");
   printf("\n-----DELETANDO USUÁRIO-----\n");
-  printf("\nInforme o nome do usuario a ser deletado: ");
-  scanf(" %79[^\n]", procurado);
+  printf("\nInforme o CPF do usuario a ser deletado: ");
+  scanf(" %d", &procurado);
   cadastro = (Usuario*) malloc(sizeof(Usuario));
   achou = 0;
   while((!achou) && (fread(cadastro, sizeof(Usuario), 1, fp))) {
-   if ((strcmp(cadastro->nome, procurado) == 0) && (cadastro->status == '1')) {
+   if ((cadastro->cpf == procurado) && (cadastro->status == '1')) {
      achou = 1;
    }
   }
-  // fclose(fp); CORRIGIR ESTE ERRO AQUI
   if (achou) {
     printf("\n");
     exibirUsuario(cadastro);
@@ -277,12 +276,12 @@ void deletarUsuario(void) {
       cadastro->status = '0';
       fseek(fp, (-1)*sizeof(cadastro), SEEK_CUR);
       fwrite(cadastro, sizeof(cadastro), 1, fp);
-      printf("\nUsuario excluído com sucesso!!!\n");
+      printf("\nUsuário excluído com sucesso!!!\n");
      } else {
        printf("\nOk, os dados não foram alterados\n");
      }
   } else {
-    printf("O usuario %s não foi encontrado...\n", procurado);
+    printf("O CPF| %d |não foi encontrado...\n", procurado);
   }
   free(cadastro);
   fclose(fp);
