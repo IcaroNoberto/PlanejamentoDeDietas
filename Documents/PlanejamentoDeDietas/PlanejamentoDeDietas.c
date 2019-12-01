@@ -10,6 +10,7 @@ struct usuario {
 	char sexo;
 	char nome[80];
 	char status;
+  char dietas[501]; 
 };
 
 int menuPrincipal(void);
@@ -20,6 +21,7 @@ void pesquisarUsuario(void);
 void editarUsuario(void);
 void deletarUsuario(void);
 void listarUsuario(void);
+void criandoDieta(void);
 void gerarDieta(void);
 void exibirUsuario(Usuario*);
 void gravarUsuario(Usuario*);
@@ -81,7 +83,7 @@ int menuCadastro(void) {
 	int cad;
 	printf("\n\n");
 	printf("_______________________________________\n");
-	printf("\n|          MENU DE CADASTRO           |\n");
+	printf("\n|          MENU DE USUÁRIO            |\n");
 	printf("_______________________________________\n");
 	printf("\n");
 	printf("   | 1 - Cadastrar Usuário         |\n");
@@ -328,21 +330,27 @@ int menuDieta(void){
 	printf("\n|         MENU DE DIETA             |\n");
 	printf("_____________________________________\n");
 	printf("\n");
-	printf("   | 1 - Gerar Dieta               |\n");
+  printf("   | 1 - Criar uma dieta           |\n");
+  printf("   | 2 - Gerar uma dieta            |\n");
+  printf("   | 3 - Alterar dieta             |\n");
+  printf("   | 4 - Deletar dieta             |\n");
+	printf("   | 5 - Ver dieta                 |\n");
 	printf("   | 0 - Voltar ao Menu Principal  |\n");
 	printf("\n");
 	printf("ESCOLHA UMA OPÇÃO: ");
 	scanf("%d", &diet);
   while (diet != 0) {
-		if (diet > 3) {
+		if (diet > 5) {
 			printf("\n\n");
 			printf("A opção não existe !\n");
 			printf("Tente novamente\n\n");
-			menuCadastro();
+			menuDieta();
 		} else {
 			switch (diet) {
-				case 1: gerarDieta();
+				case 1: criandoDieta();
 						break;
+        case 2: gerarDieta();
+            break;    
 			}
 		}
 		break;
@@ -352,6 +360,48 @@ menuPrincipal();
 return 0;
 }
 
+// Função de Criar dieta 
+//         |
+//         V
+void criandoDieta(void){
+  system("clear");
+  int achou;
+  int procurado; 
+  FILE* cad;
+  Usuario* cadastro;
+  cadastro = (Usuario*) malloc(sizeof(Usuario));
+
+  cad  = fopen("cadastro.dat", "rb");
+  if (cad == NULL){
+    printf("Ops! Ocorreu um erro na abertura do arquivo!\n");
+    printf("Não é possivel continuar o programa...\n");
+    exit(1);
+  }
+  printf("\n\n");
+  printf("\n-----CRIANDO DIETA-----\n");
+  printf("Somente pessoas cadastradas podem criar dietas!");
+  printf("\nInforme o seu CPF: ");
+  scanf(" %d", &procurado);
+  achou = 0;
+  while ((!achou) && (fread(cadastro, sizeof(Usuario), 1, cad))) {
+    if ((cadastro->cpf == procurado) && (cadastro->status == '1')) {
+      achou = 1;
+    }
+  }
+  fclose(cad);
+  if (achou){
+    exibirUsuario(cadastro);
+    printf("\nCrie a sua dieta: \n");
+    scanf(" %500[^\n]", cadastro->dietas);
+  } else {
+    printf("\nInfelizmente não encontramos nenhum cadastro com o CPF: %d", procurado);
+  }
+  printf("\n=====DIETA SALVA=====");
+  gravarUsuario(cadastro);
+}
+
+
+
 // Função de Gerar dieta 
 //         |
 //         V
@@ -359,7 +409,7 @@ void gerarDieta(void){
   system("clear");
   int achou;
   int calorias;
-  char procurado[80];
+  int procurado;
   FILE* cad;
 	Usuario* cadastro;
 	cadastro = (Usuario*) malloc(sizeof(Usuario));
@@ -373,11 +423,11 @@ void gerarDieta(void){
   printf("\n\n");
   printf("\n-----GERANDO DIETAS-----\n");
   printf("Somente usuarios podem gerar dietas");
-  printf("\nInforme o seu nome de usuário: ");
-  scanf(" %79[^\n]", procurado);
+  printf("\nInforme o seu CPF: ");
+  scanf(" %d", &procurado);
   achou = 0;
   while ((!achou) && (fread(cadastro, sizeof(Usuario), 1, cad))) {
-   if ((strcmp(cadastro->nome, procurado) == 0) && (cadastro->status == '1')) {
+   if ((cadastro->cpf == procurado) && (cadastro->status == '1')) {
       achou = 1;
    }
   }
@@ -387,7 +437,7 @@ void gerarDieta(void){
     printf("\nInforme a quantidade de calorias a serem consumidas por dia: ");
     scanf("%d", &calorias);
 	} else {
-		printf("Infelizmente não encontramos ninguém com o nome: %s\n", procurado);
+		printf("Infelizmente não encontramos nenhum cadastro com o CPF: %d\n", procurado);
 	}
   if(calorias >= 1500 && calorias <= 2000){
       FILE *dietas;
@@ -413,6 +463,66 @@ void gerarDieta(void){
 	free(cadastro);
 }
 
+
+
+// Função de Alterar Dieta 
+//           |
+//           V
+void alteraDieta(void){
+  system("clear");
+  FILE* cad;
+  Usuario* cadastro;
+  cadastro = (Usuario*) malloc(sizeof(Usuario));
+
+  int achou;
+  char resp;
+  int procurado;
+  cad = fopen("cadastro.dat", "r+b");
+  if (cad == NULL) {
+    printf("Ops! Ocorreu um erro na abertura do arquivo!\n");
+    printf("Não é possível continuar o programa...\n");
+    exit(1);
+  }
+  printf("\n\n");
+	printf("\n-----EDITANDO USUÁRIO-----\n");
+  printf("\nInforme o CPF de usuário a ser alterado: ");
+  scanf(" %d", &procurado);
+  achou = 0;
+  while ((!achou) && (fread(cadastro, sizeof(Usuario), 1, cad))) {
+   if ((cadastro->cpf == procurado) && (cadastro->status == '1')) {
+     achou = 1;
+   }
+  }
+  if (achou) {
+    printf("\n");
+    exibirUsuario(cadastro);
+    getchar();
+    printf("\n");
+    printf("\nDeseja realmente editar esse cadastro? (S/N): ");
+    scanf("%c", &resp);
+    if (resp == 's' || resp == 'S') {
+      printf("\nInforme o seu CPF: ");
+      scanf(" %d", &cadastro->cpf);
+      printf("Informe o seu nome: ");
+      scanf(" %79[^\n]", cadastro->nome);
+      printf("Informe o seu sexo (M/F): ");
+      scanf(" %c", &cadastro->sexo);
+      printf("Informe a sua idade: ");
+      scanf(" %d", &cadastro->idade);
+      cadastro->status = '1';
+      fseek(cad, (-1)*sizeof(Usuario), SEEK_CUR);
+      fwrite(cadastro, sizeof(Usuario), 1, cad);
+      printf("\n==== CADASTRO EDITADO COM SUCESSO ====\n");
+    } else {
+      printf("\nInfelizmente os dados não foram alterados !\n");
+    }
+  } else {
+    printf("Infelizmente não encontramos ninguém com o CPF: %d\n", procurado);
+  }
+  free(cadastro);
+  fclose(cad);
+}
+}
 
 ////////////////////////////////////////////////////////////
 // Funções complementares 
