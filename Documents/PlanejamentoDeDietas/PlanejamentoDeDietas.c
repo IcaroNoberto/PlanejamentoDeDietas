@@ -18,11 +18,12 @@ int menuCadastro(void);
 int menuDieta(void);
 void cadastroUsuario(void);
 void pesquisarUsuario(void);
-void buscarDieta(void);
 void editarUsuario(void);
 void deletarUsuario(void);
-void deletarDieta(void);
 void listarUsuario(void);
+void buscarDieta(void);
+void editaDieta(void);
+void deletarDieta(void);
 void criandoDieta(void);
 void gerarDieta(void);
 void exibirUsuario(Usuario*);
@@ -618,8 +619,6 @@ void buscarDieta(void){
 	}
 	free(cadastro);
 }
-
-
 
 ////////////////////////////////////////////////////////////
 // Funções complementares 
