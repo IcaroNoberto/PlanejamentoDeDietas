@@ -20,10 +20,12 @@ void cadastroUsuario(void);
 void pesquisarUsuario(void);
 void editarUsuario(void);
 void deletarUsuario(void);
+void deletarDieta(void);
 void listarUsuario(void);
 void criandoDieta(void);
 void gerarDieta(void);
 void exibirUsuario(Usuario*);
+void exibirDieta(Usuario*);
 void gravarUsuario(Usuario*);
 
 
@@ -131,7 +133,7 @@ void cadastroUsuario(void) {
 	cadastro = (Usuario*) malloc(sizeof(Usuario));
 	system("clear");
 	printf("\n\n");
-	printf("\n-----CADASTRANDO USUÁRIO-----\n");
+	printf("\n----- CADASTRANDO USUÁRIO -----\n");
   printf("\nInforme o seu CPF: ");
   scanf(" %d", &cadastro->cpf);
   printf("Informe o seu nome: ");
@@ -164,7 +166,7 @@ void pesquisarUsuario(void){
 		exit(1);
 	}
 	printf("\n\n");
-	printf("\n-----BUSCANDO USUÁRIO-----\n");
+	printf("\n----- BUSCANDO USUÁRIO -----\n");
 	printf("\nInforme o CPF do usuário a ser buscado: ");
 	scanf(" %d", &procurado);
 	achou = 0;
@@ -203,7 +205,7 @@ void editarUsuario(void){
     exit(1);
   }
   printf("\n\n");
-	printf("\n-----EDITANDO USUÁRIO-----\n");
+	printf("\n----- EDITANDO USUÁRIO -----\n");
   printf("\nInforme o CPF de usuário a ser alterado: ");
   scanf(" %d", &procurado);
   achou = 0;
@@ -258,7 +260,7 @@ void deletarUsuario(void) {
     exit(1);
   }
   printf("\n\n");
-  printf("\n-----DELETANDO USUÁRIO-----\n");
+  printf("\n----- DELETANDO USUÁRIO -----\n");
   printf("\nInforme o CPF do usuario a ser deletado: ");
   scanf(" %d", &procurado);
   cadastro = (Usuario*) malloc(sizeof(Usuario));
@@ -289,7 +291,7 @@ void deletarUsuario(void) {
   fclose(fp);
 }
 
-// Função da lista de usuários !
+// Função da listar usuários !
 //            |
 //            V
 
@@ -304,7 +306,7 @@ void listarUsuario(void) {
     exit(1);
   }
   printf("\n\n");
-  printf("\n-----LISTA DE USUÁRIOS-----\n");
+  printf("\n----- LISTA DE USUÁRIOS -----\n");
   cadastro = (Usuario*) malloc(sizeof(Usuario));
   while(fread(cadastro, sizeof(Usuario), 1, fp)) {
     if (cadastro->status == '1') {
@@ -378,7 +380,7 @@ void criandoDieta(void){
     exit(1);
   }
   printf("\n\n");
-  printf("\n-----CRIANDO DIETA-----\n");
+  printf("\n----- CRIANDO DIETA -----\n");
   printf("Somente pessoas cadastradas podem criar dietas!");
   printf("\nInforme o seu CPF: ");
   scanf(" %d", &procurado);
@@ -396,7 +398,7 @@ void criandoDieta(void){
   } else {
     printf("\nInfelizmente não encontramos nenhum cadastro com o CPF: %d", procurado);
   }
-  printf("\n=====DIETA SALVA=====");
+  printf("\n===== DIETA SALVA =====");
   gravarUsuario(cadastro);
 }
 
@@ -421,7 +423,7 @@ void gerarDieta(void){
 		exit(1);
 	}
   printf("\n\n");
-  printf("\n-----GERANDO DIETAS-----\n");
+  printf("\n----- GERANDO DIETAS -----\n");
   printf("Somente usuarios podem gerar dietas");
   printf("\nInforme o seu CPF: ");
   scanf(" %d", &procurado);
@@ -484,8 +486,8 @@ void alteraDieta(void){
     exit(1);
   }
   printf("\n\n");
-	printf("\n-----EDITANDO USUÁRIO-----\n");
-  printf("\nInforme o CPF de usuário a ser alterado: ");
+	printf("\n----- EDITANDO DIETA -----\n");
+  printf("\nInforme o seu CPF: ");
   scanf(" %d", &procurado);
   achou = 0;
   while ((!achou) && (fread(cadastro, sizeof(Usuario), 1, cad))) {
@@ -498,21 +500,18 @@ void alteraDieta(void){
     exibirUsuario(cadastro);
     getchar();
     printf("\n");
-    printf("\nDeseja realmente editar esse cadastro? (S/N): ");
+    exibirDieta(cadastro);
+    getchar();
+    printf("\n");
+    printf("\nDeseja realmente editar essa dieta? (S/N): ");
     scanf("%c", &resp);
     if (resp == 's' || resp == 'S') {
-      printf("\nInforme o seu CPF: ");
-      scanf(" %d", &cadastro->cpf);
-      printf("Informe o seu nome: ");
-      scanf(" %79[^\n]", cadastro->nome);
-      printf("Informe o seu sexo (M/F): ");
-      scanf(" %c", &cadastro->sexo);
-      printf("Informe a sua idade: ");
-      scanf(" %d", &cadastro->idade);
+      printf("\nCrie a sua dieta: \n\n");
+      scanf(" %500[^\n]", cadastro->dietas);
       cadastro->status = '1';
       fseek(cad, (-1)*sizeof(Usuario), SEEK_CUR);
       fwrite(cadastro, sizeof(Usuario), 1, cad);
-      printf("\n==== CADASTRO EDITADO COM SUCESSO ====\n");
+      printf("\n==== DIETA EDITADA COM SUCESSO ====\n");
     } else {
       printf("\nInfelizmente os dados não foram alterados !\n");
     }
@@ -522,7 +521,54 @@ void alteraDieta(void){
   free(cadastro);
   fclose(cad);
 }
-}
+
+
+
+// Função de Deletar Dieta 
+//           |
+//           V
+void deletarDieta(void) {
+  FILE* fp;
+  Usuario* cadastro;
+  int achou;
+  char resp;
+  int procurado;
+  fp = fopen("cadastro.dat", "r+b");
+  if (fp == NULL) {
+    printf("Ops! Ocorreu um erro na abertura do arquivo!\n");
+    printf("Não é possível continuar o programa...\n");
+    exit(1);
+  }
+  printf("\n\n");
+  printf("\n----- DELETANDO USUÁRIO -----\n");
+  printf("\nInforme o CPF do usuario a ser deletado: ");
+  scanf(" %d", &procurado);
+  cadastro = (Usuario*) malloc(sizeof(Usuario));
+  achou = 0;
+  while((!achou) && (fread(cadastro, sizeof(Usuario), 1, fp))) {
+   if ((cadastro->cpf == procurado) && (cadastro->status == '1')) {
+     achou = 1;
+   }
+  }
+  if (achou) {
+    printf("\n");
+    exibirUsuario(cadastro);
+    getchar();
+    printf("\nDeseja realmente deletar esse usuario (s/n)? ");
+    scanf("%c", &resp);
+    if (resp == 's' || resp == 'S') {
+      cadastro->status = '0';
+      fseek(fp, (-1)*sizeof(cadastro), SEEK_CUR);
+      fwrite(cadastro, sizeof(cadastro), 1, fp);
+      printf("\nUsuário excluído com sucesso!!!\n");
+     } else {
+       printf("\nOk, os dados não foram alterados\n");
+     }
+  } else {
+    printf("O CPF| %d |não foi encontrado...\n", procurado);
+  }
+  free(cadastro);
+  fclose(fp);
 
 ////////////////////////////////////////////////////////////
 // Funções complementares 
@@ -546,4 +592,8 @@ void exibirUsuario(Usuario* cadastro){
   printf("Nome: %s\n", cadastro->nome);
 	printf("Sexo: %c\n", cadastro->sexo);
 	printf("Idade: %d\n", cadastro->idade);
+}
+
+void exibirDieta(Usuario* cadastro){
+  printf("Dieta: %s\n", cadastro->dietas);
 }
