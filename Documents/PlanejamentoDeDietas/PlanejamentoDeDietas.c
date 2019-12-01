@@ -274,7 +274,7 @@ void deletarUsuario(void) {
     printf("\n");
     exibirUsuario(cadastro);
     getchar();
-    printf("\nDeseja realmente deletar esse usuario (s/n)? ");
+    printf("\nDeseja realmente deletar esse usuario? (s/n): ");
     scanf("%c", &resp);
     if (resp == 's' || resp == 'S') {
       cadastro->status = '0';
@@ -393,7 +393,7 @@ void criandoDieta(void){
   fclose(cad);
   if (achou){
     exibirUsuario(cadastro);
-    printf("\nCrie a sua dieta: \n");
+    printf("\nCrie a sua dieta: \n\n");
     scanf(" %500[^\n]", cadastro->dietas);
   } else {
     printf("\nInfelizmente não encontramos nenhum cadastro com o CPF: %d", procurado);
@@ -540,8 +540,8 @@ void deletarDieta(void) {
     exit(1);
   }
   printf("\n\n");
-  printf("\n----- DELETANDO USUÁRIO -----\n");
-  printf("\nInforme o CPF do usuario a ser deletado: ");
+  printf("\n----- DELETANDO DIETA -----\n");
+  printf("\nInforme o seu CPF: ");
   scanf(" %d", &procurado);
   cadastro = (Usuario*) malloc(sizeof(Usuario));
   achou = 0;
@@ -554,20 +554,24 @@ void deletarDieta(void) {
     printf("\n");
     exibirUsuario(cadastro);
     getchar();
-    printf("\nDeseja realmente deletar esse usuario (s/n)? ");
+    printf("\n");
+    exibirDieta(cadastro);
+    getchar();
+    printf("\n");
+    printf("\nDeseja realmente deletar a sua dieta? (s/n): ");
     scanf("%c", &resp);
     if (resp == 's' || resp == 'S') {
-      cadastro->status = '0';
-      fseek(fp, (-1)*sizeof(cadastro), SEEK_CUR);
+      cadastro->status = '1';
+      fseek(fp, (-1)*sizeof(cadastro->dietas), SEEK_CUR);
       fwrite(cadastro, sizeof(cadastro), 1, fp);
-      printf("\nUsuário excluído com sucesso!!!\n");
+      printf("\nDieta excluida com sucesso!!!\n");
      } else {
        printf("\nOk, os dados não foram alterados\n");
      }
   } else {
     printf("O CPF| %d |não foi encontrado...\n", procurado);
   }
-  free(cadastro);
+  free(cadastro->dietas);
   fclose(fp);
 
 ////////////////////////////////////////////////////////////
