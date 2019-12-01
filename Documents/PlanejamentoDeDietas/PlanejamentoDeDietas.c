@@ -21,6 +21,7 @@ void pesquisarUsuario(void);
 void editarUsuario(void);
 void deletarUsuario(void);
 void listarUsuario(void);
+
 void buscarDieta(void);
 void editaDieta(void);
 void deletarDieta(void);
@@ -354,7 +355,13 @@ int menuDieta(void){
 				case 1: criandoDieta();
 						break;
         case 2: gerarDieta();
-            break;    
+            break;  
+        case 3: alteraDieta();
+            break;
+        case 4: deletarDieta();
+            break;
+        case 5: buscarDieta();
+            break;
 			}
 		}
 		break;
