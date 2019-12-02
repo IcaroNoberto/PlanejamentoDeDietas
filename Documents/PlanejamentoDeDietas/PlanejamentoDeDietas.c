@@ -423,7 +423,6 @@ void criandoDieta(void){
     }
   }
   if (achou){
-    char oia;
     printf("\n");
     printf("O usuário é -->");
     printf("\n");
