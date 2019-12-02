@@ -6,7 +6,7 @@ typedef struct usuario Usuario;
 
 struct usuario {
   int idade;
-  long int cpf;
+  int numCad;
 	char sexo;
 	char nome[80];
 	char status;
@@ -164,8 +164,8 @@ void cadastroUsuario(void) {
 	system("clear");
 	printf("\n\n");
 	printf("\n----- CADASTRANDO USUÁRIO -----\n");
-  printf("\nInforme o seu CPF: ");
-  scanf(" %ld", &cadastro->cpf);
+  printf("\nInforme o seu Número de cadastro: ");
+  scanf(" %d", &cadastro->numCad);
   printf("Informe o seu nome: ");
 	scanf(" %79[^\n]", cadastro->nome);
 	printf("Informe o seu sexo (M/F): ");
@@ -188,7 +188,7 @@ void pesquisarUsuario(void){
 	cadastro = (Usuario*) malloc(sizeof(Usuario));
 	
 	int achou;
-	long int procurado;
+	int procurado;
 	cad = fopen("cadastro.dat", "rb");
 	if (cad == NULL) {
 		printf("Ops! Ocorreu um erro na abertura do arquivo!\n");
@@ -197,11 +197,11 @@ void pesquisarUsuario(void){
 	}
 	printf("\n\n");
 	printf("\n----- BUSCANDO USUÁRIO -----\n");
-	printf("\nInforme o CPF do usuário a ser buscado: ");
-	scanf(" %ld", &procurado);
+	printf("\nInforme o número de cadastro do usuário a ser buscado: ");
+	scanf(" %d", &procurado);
 	achou = 0;
 	while ((!achou) && (fread(cadastro, sizeof(Usuario), 1, cad))) {
-		if ((cadastro->cpf == procurado) && (cadastro->status == '1')){
+		if ((cadastro->numCad == procurado) && (cadastro->status == '1')){
 			achou = 1;
 		}
 	}
@@ -210,7 +210,7 @@ void pesquisarUsuario(void){
     printf("\n");
 		exibirUsuario(cadastro);
 	} else {
-		printf("Infelizmente não encontramos niguém com o CPF: %ld\n", procurado);
+		printf("Infelizmente não encontramos niguém com o número de cadastro: %d\n", procurado);
 	}
 	free(cadastro);
 }
@@ -227,7 +227,7 @@ void editarUsuario(void){
 
   int achou;
   char resp;
-  long int procurado;
+  int procurado;
   cad = fopen("cadastro.dat", "r+b");
   if (cad == NULL) {
     printf("Ops! Ocorreu um erro na abertura do arquivo!\n");
@@ -236,11 +236,11 @@ void editarUsuario(void){
   }
   printf("\n\n");
 	printf("\n----- EDITANDO USUÁRIO -----\n");
-  printf("\nInforme o CPF de usuário a ser alterado: ");
-  scanf(" %ld", &procurado);
+  printf("\nInforme o número de cadastro do usuário a ser alterado: ");
+  scanf(" %d", &procurado);
   achou = 0;
   while ((!achou) && (fread(cadastro, sizeof(Usuario), 1, cad))) {
-   if ((cadastro->cpf == procurado) && (cadastro->status == '1')) {
+   if ((cadastro->numCad == procurado) && (cadastro->status == '1')) {
      achou = 1;
    }
   }
@@ -252,8 +252,8 @@ void editarUsuario(void){
     printf("\nDeseja realmente editar esse cadastro? (S/N): ");
     scanf("%c", &resp);
     if (resp == 's' || resp == 'S') {
-      printf("\nInforme o seu CPF: ");
-      scanf(" %ld", &cadastro->cpf);
+      printf("\nInforme o seu número de cadastro: ");
+      scanf(" %d", &cadastro->numCad);
       printf("Informe o seu nome: ");
       scanf(" %79[^\n]", cadastro->nome);
       printf("Informe o seu sexo (M/F): ");
@@ -268,7 +268,7 @@ void editarUsuario(void){
       printf("\nInfelizmente os dados não foram alterados !\n");
     }
   } else {
-    printf("Infelizmente não encontramos ninguém com o CPF: %ld\n", procurado);
+    printf("Infelizmente não encontramos ninguém com o número de cadastro: %d\n", procurado);
   }
   free(cadastro);
   fclose(cad);
@@ -282,7 +282,7 @@ void deletarUsuario(void) {
   Usuario* cadastro;
   int achou;
   char resp;
-  long int procurado;
+  int procurado;
   fp = fopen("cadastro.dat", "r+b");
   if (fp == NULL) {
     printf("Ops! Ocorreu um erro na abertura do arquivo!\n");
@@ -291,12 +291,12 @@ void deletarUsuario(void) {
   }
   printf("\n\n");
   printf("\n----- DELETANDO USUÁRIO -----\n");
-  printf("\nInforme o CPF do usuario a ser deletado: ");
-  scanf(" %ld", &procurado);
+  printf("\nInforme o número de cadastro do usuario a ser deletado: ");
+  scanf(" %d", &procurado);
   cadastro = (Usuario*) malloc(sizeof(Usuario));
   achou = 0;
   while((!achou) && (fread(cadastro, sizeof(Usuario), 1, fp))) {
-   if ((cadastro->cpf == procurado) && (cadastro->status == '1')) {
+   if ((cadastro->numCad == procurado) && (cadastro->status == '1')) {
      achou = 1;
    }
   }
@@ -315,7 +315,7 @@ void deletarUsuario(void) {
        printf("\nOk, os dados não foram alterados\n");
      }
   } else {
-    printf("O CPF| %ld |não foi encontrado...\n", procurado);
+    printf("O número de cadastro| %d |não foi encontrado...\n", procurado);
   }
   free(cadastro);
   fclose(fp);
@@ -400,7 +400,7 @@ return 0;
 void criandoDieta(void){
   system("clear");
   int achou;
-  long int procurado; 
+  int procurado; 
   FILE* cad;
   Usuario* cadastro;
   cadastro = (Usuario*) malloc(sizeof(Usuario));
@@ -414,11 +414,12 @@ void criandoDieta(void){
   printf("\n\n");
   printf("\n----- CRIANDO DIETA -----\n");
   printf("Somente pessoas cadastradas podem criar dietas!");
-  printf("\nInforme o seu CPF: ");
-  scanf(" %ld", &procurado);
+  printf("\nCada usuário só pode ter uma dieta por vez!");
+  printf("\nInforme o seu número de cadastro: ");
+  scanf(" %d", &procurado);
   achou = 0;
   while ((!achou) && (fread(cadastro, sizeof(Usuario), 1, cad))) {
-    if ((cadastro->cpf == procurado) && (cadastro->status == '1')) {
+    if ((cadastro->numCad == procurado) && (cadastro->status == '1')) {
       achou = 1;
     }
   }
@@ -433,7 +434,7 @@ void criandoDieta(void){
     fwrite(cadastro, sizeof(Usuario), 1, cad);
     printf("\n===== DIETA SALVA =====");
   } else {
-    printf("\nInfelizmente não encontramos nenhum cadastro com o CPF: %ld", procurado);
+    printf("\nInfelizmente não encontramos ninguém com este número: %d", procurado);
   }
   free(cadastro);
   fclose(cad);
@@ -454,7 +455,7 @@ void alteraDieta(void){
 
   int achou;
   char resp;
-  long int procurado;
+  int procurado;
   cad = fopen("cadastro.dat", "r+b");
   if (cad == NULL) {
     printf("Ops! Ocorreu um erro na abertura do arquivo!\n");
@@ -463,11 +464,11 @@ void alteraDieta(void){
   }
   printf("\n\n");
 	printf("\n----- EDITANDO DIETA -----\n");
-  printf("\nInforme o seu CPF: ");
-  scanf(" %ld", &procurado);
+  printf("\nInforme o seu número de cadastro: ");
+  scanf(" %d", &procurado);
   achou = 0;
   while ((!achou) && (fread(cadastro, sizeof(Usuario), 1, cad))) {
-   if ((cadastro->cpf == procurado) && (cadastro->status == '1')) {
+   if ((cadastro->numCad == procurado) && (cadastro->status == '1')) {
      achou = 1;
    }
   }
@@ -489,7 +490,7 @@ void alteraDieta(void){
       printf("\nInfelizmente os dados não foram alterados !\n");
     }
   } else {
-    printf("Infelizmente não encontramos ninguém com o CPF: %ld\n", procurado);
+    printf("Infelizmente não encontramos ninguém com este número de cadastro: %d\n", procurado);
   }
   free(cadastro);
   fclose(cad);
@@ -507,7 +508,7 @@ void buscarDieta(void){
 	cadastro = (Usuario*) malloc(sizeof(Usuario));
 	
 	int achou;
-	long int procurado;
+	int procurado;
 	cad = fopen("cadastro.dat", "rb");
 	if (cad == NULL) {
 		printf("Ops! Ocorreu um erro na abertura do arquivo!\n");
@@ -516,25 +517,22 @@ void buscarDieta(void){
 	}
 	printf("\n\n");
 	printf("\n----- BUSCANDO DIETA -----\n");
-	printf("\nInforme o seu CPF: ");
-	scanf(" %ld", &procurado);
+	printf("\nInforme o seu número de cadastro: ");
+	scanf(" %d", &procurado);
 	achou = 0;
 	while ((!achou) && (fread(cadastro, sizeof(Usuario), 1, cad))) {
-		if ((cadastro->cpf == procurado) && (cadastro->status == '1')){
+		if ((cadastro->numCad == procurado) && (cadastro->status == '1')){
 			achou = 1;
 		}
 	}
   fclose(cad);
 	if (achou) {
     printf("\n");
-		exibirUsuario(cadastro);
-    getchar();
-    printf("\n\n");
     exibirDieta(cadastro);
     getchar();
     printf("\n");
 	} else {
-		printf("Infelizmente não encontramos ninguém com o CPF: %ld\n", procurado);
+		printf("Infelizmente não encontramos ninguém com este número de cadastro: %d\n", procurado);
 	}
 	free(cadastro);
 }
@@ -557,7 +555,7 @@ void gravarUsuario(Usuario* cadastro){
 }
 
 void exibirUsuario(Usuario* cadastro){
-  printf("CPF: %ld\n", cadastro->cpf);
+  printf("Número de Cadastro: %d\n", cadastro->numCad);
   printf("Nome: %s\n", cadastro->nome);
 	printf("Sexo: %c\n", cadastro->sexo);
 	printf("Idade: %d\n", cadastro->idade);
@@ -565,5 +563,6 @@ void exibirUsuario(Usuario* cadastro){
 }
 
 void exibirDieta(Usuario* cadastro){
+  printf("Nome: %s\n", cadastro->nome);
   printf("Dieta: %s\n", cadastro->dietas);
 }
