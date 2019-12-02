@@ -16,6 +16,7 @@ struct usuario {
 int menuPrincipal(void);
 int menuCadastro(void);
 int menuDieta(void);
+void menuSobre(void);
 void cadastroUsuario(void);
 void pesquisarUsuario(void);
 void editarUsuario(void);
@@ -58,6 +59,7 @@ int menuPrincipal(void) {
   printf("\n");
   printf("    | 1 - Menu de Usuário          |\n");
   printf("    | 2 - Menu de Dieta            |\n");
+  printf("    | 3 - Sobre o Programa         |\n");
   printf("    | 0 - Encerrar programa        |\n");
   printf("\n");
   printf("ESCOLHA UMA OPÇÃO: ");
@@ -69,12 +71,40 @@ int menuPrincipal(void) {
   if (op == 2) {
     system("clear");
     menuDieta();
+  } 
+  if (op == 3){
+    system("clear");
+    menuSobre();
   } else {
     printf("\nFim do Programa !");
     exit(0);
   }
   return op;
 }
+
+
+
+// Menu "Sobre o Programa"
+//           |
+//           V
+
+void menuSobre(void){
+  system("clear");
+  printf("\n\n");
+  printf("---------------------------------------------\n");
+  printf("-               SIG-DietPlan                -\n");
+  printf("-      Sistema de Planejamento de Dietas    -\n ");
+  printf("---------------------------------------------\n");
+  printf("-     Univ. Fed. do Rio Grande do Norte     -\n");
+  printf("-      Curso de Sistemas de Informação      -\n");
+  printf("-      By Turma de Programação 2019.2       -\n");
+  printf("-  Alunos: Fábson Jordão e Ícaro Fernandes  -\n");
+  printf("---------------------------------------------\n");
+  printf("\n");
+  menuPrincipal();
+}
+
+
 
 //////////////////////////////////////////////////////////
 // Entrando nas funções do Menu de Cadastro
@@ -366,6 +396,7 @@ return 0;
 // Função de Criar dieta 
 //         |
 //         V
+
 void criandoDieta(void){
   system("clear");
   int achou;
@@ -416,6 +447,7 @@ void criandoDieta(void){
 // Função de Alterar Dieta 
 //           |
 //           V
+
 void alteraDieta(void){
   system("clear");
   FILE* cad;
@@ -469,6 +501,7 @@ void alteraDieta(void){
 // Função de Ver Dieta
 //         |
 //         V
+
 void buscarDieta(void){
   system("clear");
 	FILE* cad;
@@ -512,6 +545,7 @@ void buscarDieta(void){
 // Funções complementares 
 //          |
 //          V 
+
 void gravarUsuario(Usuario* cadastro){
 	FILE* cad;
 	cad = fopen("cadastro.dat", "ab");
