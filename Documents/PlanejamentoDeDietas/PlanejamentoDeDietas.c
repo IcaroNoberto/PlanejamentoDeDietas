@@ -424,18 +424,17 @@ void criandoDieta(void){
   }
   if (achou){
     printf("\n");
-    printf("O usuário é -->");
-    printf("\n");
     exibirUsuario(cadastro);
-    printf("\nCRIE A SUA DIETA: \n\n");
+    printf("\n");
+    printf("\nCRIE A SUA DIETA(Informe sua dieta separando os alimentos por(,) e os horarios por(/): \n");
     scanf(" %500[^\n]", cadastro->dietas);
     cadastro->status = '1';
     fseek(cad, (-1)*sizeof(Usuario), SEEK_CUR);
     fwrite(cadastro, sizeof(Usuario), 1, cad);
+    printf("\n===== DIETA SALVA =====");
   } else {
     printf("\nInfelizmente não encontramos nenhum cadastro com o CPF: %ld", procurado);
   }
-  printf("\n===== DIETA SALVA =====");
   free(cadastro);
   fclose(cad);
 }
